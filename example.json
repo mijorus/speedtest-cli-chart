@@ -1,0 +1,34 @@
+{
+    "client": {
+        "rating": "0",
+        "loggedin": "0",
+        "isprating": "3.7",
+        "ispdlavg": "0",
+        "ip": "xxxxx",
+        "isp": "XXXXX",
+        "lon": "xxxx",
+        "ispulavg": "0",
+        "country": "IT",
+        "lat": "xxxx"
+    },
+    "bytes_sent": 130596864,
+    "download": 736106978.1039169,
+    "timestamp": "2021-06-26T08:25:21.190109Z",
+    "share": null,
+    "bytes_received": 409373932,
+    "ping": 5.055,
+    "upload": 104054426.74160358,
+    "server": {
+        "latency": 5.055,
+        "name": "Rome",
+        "url": "http://speedtestrm1.example.com",
+        "country": "Italy",
+        "lon": "XXXXx",
+        "cc": "IT",
+        "host": "speedtestrm1.example.com:8080",
+        "sponsor": "XXX",
+        "lat": "xxx",
+        "id": "xxx",
+        "d": 123123123123
+    }
+}
