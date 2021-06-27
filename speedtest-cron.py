@@ -22,12 +22,7 @@ template = open((path +'/template.hbs'), 'rt')
 labels = []
 for data in database:
     if data['timestamp']:
-        labels.append(iso8601.parse_date(data['timestamp']).strftime("%d/%m/%Y"))
-
-labels = []
-for data in database:
-    if data['timestamp']:
-        labels.append(iso8601.parse_date(data['timestamp']).strftime("%d/%m/%Y"))
+        labels.append(iso8601.parse_date(data['timestamp']).strftime("%d/%m/%Y %H:%M"))
 
 downloads = []
 for data in database:
