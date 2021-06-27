@@ -48,5 +48,5 @@ html = re.sub('{{ uploads }}', json.dumps(uploads), html)
 html = re.sub('{{ pings }}', json.dumps(pings), html)
 template.close()
 
-output = open('./history.html', 'w')
+output = open('./public/history.html', 'w')
 output.write(html)
