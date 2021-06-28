@@ -9,7 +9,7 @@ import pathlib
 path = str(pathlib.Path(__file__).parent.resolve())
 
 database = json.loads(open((path +'/database.json'), 'rt').read())
-speed_test = json.loads(subprocess.check_output(['speedtest', '--json']))
+speed_test = json.loads(subprocess.check_output(['/usr/local/bin/speedtest', '--json']))
 
 database.append(speed_test)
 
