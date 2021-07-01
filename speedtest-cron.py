@@ -5,11 +5,16 @@ import re
 from datetime import datetime
 import iso8601
 import pathlib
+import pytz
 
 path = str(pathlib.Path(__file__).parent.resolve())
 
 database = json.loads(open((path +'/database.json'), 'rt').read())
-speed_test = json.loads(subprocess.check_output(['/usr/local/bin/speedtest', '--json']))
+
+try:
+	speed_test = json.loads(subprocess.check_output(['/usr/local/bin/speedtest', '--json']))
+except subprocess.CalledProcessError as e:
+        speed_test = {'download': 0, 'upload': 0, 'ping': 0}
 
 database.append(speed_test)
 
@@ -22,7 +27,8 @@ template = open((path +'/template.hbs'), 'rt')
 labels = []
 for data in database:
     if data['timestamp']:
-        labels.append(iso8601.parse_date(data['timestamp']).strftime("%d/%m/%Y %H:%M"))
+        tz = pytz.timezone('Europe/Rome')
+        labels.append(iso8601.parse_date(data['timestamp']).astimezone(tz).strftime("%d/%m/%Y %H:%M"))
 
 downloads = []
 for data in database:
@@ -48,3 +54,4 @@ template.close()
 
 output = open((path +'/public/history.html'), 'w')
 output.write(html)
+output.close()
