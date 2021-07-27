@@ -26,18 +26,18 @@ template = open((path +'/template.hbs'), 'rt')
 
 labels = []
 for data in database:
-    if data['timestamp']:
+    if 'timestamp' in data:
         tz = pytz.timezone('Europe/Rome')
         labels.append(iso8601.parse_date(data['timestamp']).astimezone(tz).strftime("%d/%m/%Y %H:%M"))
 
 downloads = []
 for data in database:
-    if data['download']:
+    if 'download' in data:
         downloads.append( int(data['download']) / 1000000 )
 
 uploads = []
 for data in database:
-    if data['upload']:
+    if 'upload' in data:
         uploads.append( int(data['upload']) / 1000000 )
 
 pings = []
