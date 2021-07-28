@@ -6,10 +6,14 @@ from datetime import datetime
 import iso8601
 import pathlib
 import pytz
+import time
+import random
 
 path = str(pathlib.Path(__file__).parent.resolve())
 
 database = json.loads(open((path +'/database.json'), 'rt').read())
+
+time.sleep(random.randint(10, 40))
 
 try:
 	speed_test = json.loads(subprocess.check_output(['/usr/local/bin/speedtest', '--json']))
@@ -28,7 +32,7 @@ labels = []
 for data in database:
     if 'timestamp' in data:
         tz = pytz.timezone('Europe/Rome')
-        labels.append(iso8601.parse_date(data['timestamp']).astimezone(tz).strftime("%d/%m/%Y %H:%M"))
+        labels.append(iso8601.parse_date(data['timestamp']).astimezone(tz).strftime("%d/%m/%Y"))
 
 downloads = []
 for data in database:
