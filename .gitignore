@@ -1,3 +1,4 @@
 *.code-workspace
 database.json
+database_backup.json
 history.html

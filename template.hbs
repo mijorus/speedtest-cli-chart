@@ -7,10 +7,18 @@
     <title>Speedtest History</title>
 </head>
 <body>
-    <div style="display: flex; justify-content:center">
+    <div style="display: flex;justify-content:center;flex-direction: column;align-items: center;">
         <div style="width: 1400px; height: auto;">
             <canvas id="myChart" width="1000px"></canvas>
         </div>
+        <table style="width: 1400px; margin-top: 20px;">
+            <thead>
+                <th>ID</th>
+                <th>Server name</th>
+                <th>Usage</th>
+            </thead>
+            <tbody>{{ servers_table }}</tbody>
+        </table>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.3.2/dist/chart.min.js" defer></script>
     <script>
@@ -72,4 +80,22 @@
         }
     </script>
 </body>
+<style>
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    td,
+    th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+    }
+
+    tr:nth-child(even) {
+        background-color: #dddddd;
+    }
+</style>
 </html>
