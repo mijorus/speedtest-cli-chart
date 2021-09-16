@@ -1,5 +1,5 @@
 # Speeedtest Graph
-
+![screenshot](https://raw.githubusercontent.com/mijorus/speedtest-cli-chart/master/screenshot.png)
 This is a pretty simple python script that will output an html file with a graph showing your connection speed history.
 It was develped to be used in a cronjob on a Raspberry Pi running Raspbian Buster, but it is very simple code which should run on other systems as well.
 
