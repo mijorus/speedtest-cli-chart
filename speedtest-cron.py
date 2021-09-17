@@ -26,10 +26,8 @@ except:
 
 db_create(database, 'database_backup.json')
 
-command = subprocess.check_output('which speedtest', shell=True).decode().strip()
-
 try:
-    speed_test = json.loads(subprocess.check_output([command, '--json']))
+    speed_test = json.loads(subprocess.check_output(['/usr/local/bin/speedtest', '--json']))
 except subprocess.CalledProcessError as e:
     speed_test = {'download': 0, 'upload': 0, 'ping': 0}
 
