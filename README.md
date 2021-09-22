@@ -18,3 +18,9 @@ You can override this behavior with
 ```sh
 python3 speedtest-cron.py --no-sleep
 ``` 
+
+You can show the results in the terminal with:
+```sh
+python3 speedtest-cron.py --show
+```
+
