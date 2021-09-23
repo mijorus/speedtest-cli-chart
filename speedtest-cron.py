@@ -35,7 +35,7 @@ database.append(speed_test)
 db_create(database)
 
 if '--show' in sys.argv:
-    print('Download: '+str(int(speed_test['download']) / 1000000 )+' Mbit/s\nUpload: '+str(int(speed_test['upload']) / 1000000 ) + ' Mbit/s\nPing:'+str(speed_test['ping'])+'s')
+    print('Download: '+str(int(speed_test['download']) / 1000000 )+' Mbit/s\nUpload: '+str(int(speed_test['upload']) / 1000000 ) + ' Mbit/s\nPing: '+str(speed_test['ping'])+'s')
 
 
 template = open((path +'/template.hbs'), 'rt')
