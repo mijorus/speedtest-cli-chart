@@ -1,0 +1,40 @@
+{
+    "type": "result",
+    "timestamp": "2021-11-03T10:14:32Z",
+    "ping": {
+        "jitter": 0.106,
+        "latency": 46.826999999999998
+    },
+    "download": {
+        "bandwidth": 45365006,
+        "bytes": 511185893,
+        "elapsed": 11705
+    },
+    "upload": {
+        "bandwidth": 12921864,
+        "bytes": 115021968,
+        "elapsed": 9008
+    },
+    "packetLoss": 0,
+    "isp": "Telecom Italia",
+    "interface": {
+        "internalIp": "192.168.1.191",
+        "name": "eth0",
+        "macAddr": "xxxxxxxxx",
+        "isVpn": false,
+        "externalIp": "xxxxxxxxxxxxxxx"
+    },
+    "server": {
+        "id": 395,
+        "name": "xxxx",
+        "location": "xxx",
+        "country": "Italy",
+        "host": "xxxxxx",
+        "port": 8080,
+        "ip": "xxxxxxxxxx"
+    },
+    "result": {
+        "id": "xxxxxxxxxxxxxxxxxxxxxxx",
+        "url": "https://www.speedtest.net/result/c/xxxxxxxxxxxxxxxx"
+    }
+}

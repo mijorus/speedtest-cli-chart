@@ -27,16 +27,27 @@ except:
 db_create(database, 'database_backup.json')
 
 try:
-    speed_test_path = subprocess.check_output(['which', 'speedtest-cli']).decode('UTF-8').replace('\n', '')
-    speed_test = json.loads(subprocess.check_output([speed_test_path, '--json']))
-except subprocess.CalledProcessError as e:
-    speed_test = {'download': 0, 'upload': 0, 'ping': 0}
+    # speed_test_path = subprocess.check_output(['which', 'speedtest']).decode('UTF-8').replace('\n', '')
+    speed_test = json.loads(subprocess.check_output(['/home/pi/.local/bin/speedtest', '--format=json']))
+except subprocess.CalledProcessError as Exeption:
+    print(Exception)
+    speed_test = {
+        'download': {
+            'bytes': 0,
+        }, 
+        'upload': {
+            'bytes': 0,
+        }, 
+        'ping': {
+            'latency': 0
+        }
+    }
 
 database.append(speed_test)
 db_create(database)
 
 if '--show' in sys.argv:
-    print('Download: '+str(int(speed_test['download']) / 1000000 )+' Mbit/s\nUpload: '+str(int(speed_test['upload']) / 1000000 ) + ' Mbit/s\nPing: '+str(speed_test['ping'])+'s')
+    print('Download: '+str(int(speed_test['download']['bytes']) * 8 / 10000000 )+' Mbit/s\nUpload: '+str(int(speed_test['upload']['bytes']) * 8 / 10000000 ) + ' Mbit/s\nPing: '+str(speed_test['ping']['latency'])+'s')
 
 
 template = open((path +'/template.hbs'), 'rt')
@@ -51,19 +62,25 @@ for data in database:
         tz = pytz.timezone('Europe/Rome')
         labels.append(iso8601.parse_date(data['timestamp']).astimezone(tz).strftime("%d/%m/%Y %H:%M"))
     
-    if 'download' in data:
+    if 'download' in data and (type(data['download']) is float or type(data['download']) is int):
         downloads.append( int(data['download']) / 1000000 )
+    else:
+        downloads.append( data['download']['bytes'] * 8 / 10000000 )
 
-    if 'upload' in data:
+    if 'upload' in data and (type(data['upload']) is float or type(data['upload']) is int):
         uploads.append( int(data['upload']) / 1000000 )
+    else:
+        uploads.append( data['upload']['bytes'] * 8 / 10000000 )
 
-    if data['ping']:
+    if 'ping' in data and (type(data['ping']) is float or type(data['ping']) is int):
         pings.append(data['ping'])
+    else:
+        pings.append(data['ping']['latency'])
 
     if 'server' in data:
         server = servers[data['server']['id']] if data['server']['id'] in servers else {}
         servers[data['server']['id']] = {
-            'name': data['server']['name'] + ' ' + (data['server']['sponsor'] if 'sponsor' in data['server'] else ''), 
+            'name': data['server']['name'], 
             'count': 1 if not 'count' in server else server['count'] + 1
         }
 
