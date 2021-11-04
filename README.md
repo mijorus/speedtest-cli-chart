@@ -4,6 +4,8 @@ This is a pretty simple python script that will output an html file with a graph
 It was develped to be used in a cronjob on a Raspberry Pi running Raspbian Buster, but it is very simple code which should run on other systems as well.
 
 ## Requires
+This script requires Ookla's [official CLI tool](https://www.speedtest.net/apps/cli) to be installed on the system.
+I found it more precise and reliable on a gigabit connection than the open source python version `speedtest-cli` you might be familiar with. 
 ```python
 pip install iso8601
 ```
