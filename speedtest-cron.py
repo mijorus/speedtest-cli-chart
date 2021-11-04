@@ -8,6 +8,7 @@ import time
 import random
 import os
 import sys
+import datetime
 
 if not '--no-sleep' in sys.argv:
     time.sleep(random.randint(10, 40))
@@ -27,7 +28,6 @@ except:
 db_create(database, 'database_backup.json')
 
 try:
-    # speed_test_path = subprocess.check_output(['which', 'speedtest']).decode('UTF-8').replace('\n', '')
     speed_test = json.loads(subprocess.check_output(['/home/pi/.local/bin/speedtest', '--format=json']))
 except subprocess.CalledProcessError as Exeption:
     print(Exception)
@@ -59,23 +59,31 @@ pings = []
 servers = {}
 for data in database:
     if 'timestamp' in data:
-        tz = pytz.timezone('Europe/Rome')
+        now = datetime.datetime.now()
+        local_now = now.astimezone()
+        local_tz = local_now.tzinfo
+        tz = pytz.timezone(local_tz.tzname(local_now))
         labels.append(iso8601.parse_date(data['timestamp']).astimezone(tz).strftime("%d/%m/%Y %H:%M"))
-    
-    if 'download' in data and (type(data['download']) is float or type(data['download']) is int):
-        downloads.append( int(data['download']) / 1000000 )
     else:
-        downloads.append( data['download']['bytes'] * 8 / 10000000 )
+        labels.append('unknown')
 
-    if 'upload' in data and (type(data['upload']) is float or type(data['upload']) is int):
-        uploads.append( int(data['upload']) / 1000000 )
-    else:
-        uploads.append( data['upload']['bytes'] * 8 / 10000000 )
+    if 'download' in data:
+        if type(data['download']) is dict:
+            downloads.append( data['download']['bytes'] * 8 / 10000000 )
+        else:
+            downloads.append( int(data['download']) / 1000000 )
 
-    if 'ping' in data and (type(data['ping']) is float or type(data['ping']) is int):
-        pings.append(data['ping'])
-    else:
-        pings.append(data['ping']['latency'])
+    if 'upload' in data:
+        if type(data['upload']) is dict:
+            uploads.append( data['upload']['bytes'] * 8 / 10000000 )
+        else:
+            uploads.append( int(data['upload']) / 1000000 )
+
+    if 'ping' in data:
+        if type(data['ping']) is dict:
+            pings.append(data['ping']['latency'])
+        else:
+            pings.append(data['ping'])
 
     if 'server' in data:
         server = servers[data['server']['id']] if data['server']['id'] in servers else {}
