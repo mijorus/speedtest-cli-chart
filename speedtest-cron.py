@@ -20,6 +20,9 @@ def db_create(content, filename = 'database.json'):
     f.write(json.dumps(content))
     f.close()
 
+def convert_to_mbps(bytes: int):
+    return str(bytes * 8 / 1000000)
+
 try:
     database = json.loads(open((path +'/database/database.json'), 'rt').read())
 except:
@@ -47,7 +50,7 @@ database.append(speed_test)
 db_create(database)
 
 if '--show' in sys.argv:
-    print('Download: '+str(int(speed_test['download']['bytes']) * 8 / 10000000 )+' Mbit/s\nUpload: '+str(int(speed_test['upload']['bytes']) * 8 / 10000000 ) + ' Mbit/s\nPing: '+str(speed_test['ping']['latency'])+'s')
+    print('Download: '+convert_to_mbps(speed_test['download']['bandwidth'])+' Mbit/s\nUpload: '+convert_to_mbps(speed_test['upload']['bandwidth'])+ ' Mbit/s\nPing: '+str(speed_test['ping']['latency'])+'s')
 
 
 template = open((path +'/template.hbs'), 'rt')
@@ -69,21 +72,15 @@ for data in database:
 
     if 'download' in data:
         if type(data['download']) is dict:
-            downloads.append( data['download']['bytes'] * 8 / 10000000 )
-        else:
-            downloads.append( int(data['download']) / 1000000 )
+            downloads.append( convert_to_mbps(data['download']['bandwidth']) )
 
     if 'upload' in data:
         if type(data['upload']) is dict:
-            uploads.append( data['upload']['bytes'] * 8 / 10000000 )
-        else:
-            uploads.append( int(data['upload']) / 1000000 )
+            uploads.append( convert_to_mbps(data['upload']['bandwidth']) )
 
     if 'ping' in data:
         if type(data['ping']) is dict:
             pings.append(data['ping']['latency'])
-        else:
-            pings.append(data['ping'])
 
     if 'server' in data:
         server = servers[data['server']['id']] if data['server']['id'] in servers else {}
