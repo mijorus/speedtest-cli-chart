@@ -13,7 +13,7 @@ import datetime
 path = str(pathlib.Path(__file__).parent.resolve())
 
 def db_create(content, filename = 'database.json'):
-    f = open((path +'/database/'+filename), 'w')
+    f = open((path +'/database/'+filename), 'w+')
     f.write(json.dumps(content))
     f.close()
 
