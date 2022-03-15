@@ -11,7 +11,7 @@ pip install iso8601
 ```
 ## Usage
 ```sh
-python3 speedtest-cron.py
+python3 speedtest-cron.py --script-path=<path to the speedtest-cli script>
 ```
 
 By default the script will sleep for a random amount of secods (less than a minute don't worry) in order to avoid high traffic on Speedtest.net's servers and possibly a failure of the test.
