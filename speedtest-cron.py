@@ -52,7 +52,6 @@ db_create(database)
 if '--show' in sys.argv:
     print('Download: '+convert_to_mbps(speed_test['download']['bandwidth'])+' Mbit/s\nUpload: '+convert_to_mbps(speed_test['upload']['bandwidth'])+ ' Mbit/s\nPing: '+str(speed_test['ping']['latency'])+'s')
 
-
 template = open((path +'/template.hbs'), 'rt')
 
 labels = []
@@ -60,6 +59,7 @@ downloads = []
 uploads = []
 pings = []
 servers = {}
+
 for data in database:
     if 'timestamp' in data:
         now = datetime.datetime.now()
@@ -72,15 +72,24 @@ for data in database:
 
     if 'download' in data:
         if type(data['download']) is dict:
-            downloads.append( convert_to_mbps(data['download']['bandwidth']) )
-
+            try:
+                downloads.append( convert_to_mbps(data['download']['bandwidth']) )
+            except:
+                downloads.append(0)
+    
     if 'upload' in data:
         if type(data['upload']) is dict:
-            uploads.append( convert_to_mbps(data['upload']['bandwidth']) )
-
+            try:
+                uploads.append( convert_to_mbps(data['upload']['bandwidth']) )
+            except:
+                uploads.append(0)
+    
     if 'ping' in data:
         if type(data['ping']) is dict:
-            pings.append(data['ping']['latency'])
+            try:
+                pings.append(data['ping']['latency'])
+            except:
+                pings.append(0)
 
     if 'server' in data:
         server = servers[data['server']['id']] if data['server']['id'] in servers else {}
@@ -103,6 +112,6 @@ html = re.sub('{{ servers_table }}', s_table, html)
 
 template.close()
 
-output = open((path +'/public/history.html'), 'w')
+output = open((path +'/public/history.html'), 'w+')
 output.write(html)
 output.close()
