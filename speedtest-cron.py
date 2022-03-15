@@ -23,6 +23,11 @@ def db_create(content, filename = 'database.json'):
 def convert_to_mbps(bytes: int):
     return str(bytes * 8 / 1000000)
 
+def exec(command: str, hide_err=False):
+    if hide_err:
+        return subprocess.check_output([command], shell=True, stderr=subprocess.PIPE).decode('utf-8')
+    return subprocess.check_output([command], shell=True).decode('utf-8')
+
 try:
     database = json.loads(open((path +'/database/database.json'), 'rt').read())
 except:
@@ -31,7 +36,12 @@ except:
 db_create(database, 'database_backup.json')
 
 try:
-    speed_test = json.loads(subprocess.check_output(['/home/pi/.local/bin/speedtest', '--format=json']))
+    source = '/home/pi/.local/bin/speedtest'
+    for argv in sys.argv:
+        if argv.__contains__('--script-path='):
+            source = argv.replace('--script-path=', '')
+
+    speed_test = json.loads(subprocess.check_output([source, '--format=json']))
 except subprocess.CalledProcessError as Exeption:
     print(Exception)
     speed_test = {
