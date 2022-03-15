@@ -6,6 +6,8 @@ It was develped to be used in a cronjob on a Raspberry Pi running Raspbian Buste
 ## Requires
 This script requires Ookla's [official CLI tool](https://www.speedtest.net/apps/cli) to be installed on the system.
 I found it more precise and reliable on a gigabit connection than the open source python version `speedtest-cli` you might be familiar with. 
+
+The script also requires:
 ```python
 pip install iso8601
 ```
