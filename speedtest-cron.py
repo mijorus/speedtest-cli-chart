@@ -3,7 +3,6 @@ import json
 import re
 import iso8601
 import pathlib
-import pytz
 import time
 import random
 import os
@@ -68,11 +67,7 @@ def main():
 
     for data in database:
         if 'timestamp' in data:
-            now = datetime.datetime.now()
-            local_now = now.astimezone()
-            local_tz = local_now.tzinfo
-            tz = pytz.timezone(local_tz.tzname(local_now))
-            labels.append(iso8601.parse_date(data['timestamp']).astimezone(tz).strftime("%d/%m/%Y %H:%M"))
+            labels.append(iso8601.parse_date(data['timestamp']).strftime("%d/%m/%Y %H:%M"))
         else:
             labels.append('unknown')
 
